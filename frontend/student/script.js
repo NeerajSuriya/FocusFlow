@@ -13,6 +13,14 @@ const io = new Server(server, {
     cors: { origin: "*" }
 });
 
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then((stream) => {
+        document.getElementById("videoElement").srcObject = stream;
+    })
+    .catch((err) => console.error("Webcam access error:", err));
+
+
+
 app.use(express.json());
 app.use("/api", routes);
 
