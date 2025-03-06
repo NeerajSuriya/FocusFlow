@@ -3,29 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Dashboard</title>
+    <title>FocusFlow</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Teacher Dashboard</h1>
-
-    <h2>Student Engagement</h2>
-    <ul id="student-list"></ul>
-
-    <h2>Live Chat</h2>
-    <div id="chat-box">
-        <div id="chat-messages"></div>
-        <input type="text" id="chat-input" placeholder="Type a message...">
-        <button id="chat-send">Send</button>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">FocusFlow</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
     </div>
-    <div id="student-videos"></div>
-    <h2>Student Webcam Feed</h2>
-    <video id="student-video" autoplay playsinline></video>
-    <h2>Student Engagement</h2>
-    <div id="engagement-list"></div>
+    <!-- Main container -->
+    <div class="container">
+        <!-- Teacher Video Section -->
+        <div class="teacher-section">
+            <video id="teacherVideo" autoplay muted>
+                <source src="https://www.dropbox.com/s/numby1tm2ulrsvs/teacher%20(2).mp4?raw=1" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
 
+        <!-- Student Videos Section -->
+        <div class="student-section">
+            <h2>Student's Videos</h2>
+            <div class="grid">
+                <video id="studentWebcam" autoplay muted></video> <!-- Student Webcam -->
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+                <div class="empty-box"></div>
+            </div>
+        </div>
+    </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Access webcam for student video
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                document.getElementById('studentWebcam').srcObject = stream;
+            })
+            .catch(error => {
+                console.error("Error accessing webcam: ", error);
+            });
+    </script>
 </body>
 </html>

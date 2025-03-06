@@ -8,32 +8,40 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <h1>FocusFlow</h1>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">FocusFlow</div>
         <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="profile.html">Profile</a>
-            <a href="logout.html">Logout</a>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
         </div>
-    </nav>
+    </div>
 
     <!-- Main Content -->
     <div class="container">
-        <h2>Real-Time Student Engagement Tracker</h2>
-        <p class="status">Status: <span class="active">Active</span></p>
-        <p class="engagement-time">Engagement Time: <span id="time">0s</span></p>
+        <!-- Teacher's video (Big) -->
+        <div class="teacher-video">
+            <video id="teacher-video" autoplay >
+                <source src="https://www.dropbox.com/s/numby1tm2ulrsvs/teacher%20(2).mp4?raw=1" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
 
-        <div class="video-container">
+        <!-- Student's webcam (Small at bottom-right) -->
+        <div class="webcam-container">
             <video id="student-webcam" autoplay playsinline></video>
-        </div>        
-
-        <h3>Chat with Teacher</h3>
-        <div class="chat">
-            <input type="text" placeholder="Type a message...">
-            <button>Send</button>
         </div>
     </div>
+
+    <!-- Chat Section -->
+    <div class="chat-box">
+        <input style="width: 40%;" type="text" placeholder="Type a message...">
+        <button>Send</button>
+    </div>
+
+    <!-- Webcam JavaScript -->
     <script src="./webcam.js"></script>
+
 </body>
 </html>
