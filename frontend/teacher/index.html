@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher View</title>
+    <title>Teacher Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Teacher Dashboard</h1>
-        <h3>Student Engagement</h3>
-        <p id="student-status">Status: <span>Loading...</span></p>
-        <p id="student-time">Engagement Time: 0s</p>
+    <h1>Teacher Dashboard</h1>
+
+    <h2>Student Engagement</h2>
+    <ul id="student-list"></ul>
+
+    <h2>Live Chat</h2>
+    <div id="chat-box">
+        <div id="chat-messages"></div>
+        <input type="text" id="chat-input" placeholder="Type a message...">
+        <button id="chat-send">Send</button>
     </div>
+    <div id="student-videos"></div>
+    <h2>Student Webcam Feed</h2>
+    <video id="student-video" autoplay playsinline></video>
+    <h2>Student Engagement</h2>
+    <div id="engagement-list"></div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

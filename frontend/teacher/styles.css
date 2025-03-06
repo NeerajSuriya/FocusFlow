@@ -1,39 +1,93 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f4f4f4;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container {
-    width: 50%;
-    margin: 50px auto;
-    padding: 20px;
     background: white;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
 }
 
 h1 {
+    font-size: 24px;
     color: #333;
 }
 
-video {
-    width: 300px;
-    height: 200px;
-    background: black;
+#status {
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
-textarea {
-    width: 80%;
-    height: 100px;
-    padding: 10px;
-    font-size: 16px;
+.active {
+    color: green;
 }
 
-button {
+#chat {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
     padding: 10px;
-    margin: 10px;
-    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+#chat-messages {
+    list-style: none;
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    background: #fafafa;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#chat-messages p {
+    background: #e1f5fe;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+#chat-input {
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#chat-send {
+    padding: 10px;
+    background: #0288d1;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
+}
+
+#chat-send:hover {
+    background: #026aa7;
+}
+
+#student-video {
+    width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background: black;
 }

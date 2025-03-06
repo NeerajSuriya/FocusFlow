@@ -1,48 +1,49 @@
 const express = require("express");
 const http = require("http");
-const mongoose = require("mongoose");
-const cors = require("cors");
 const { Server } = require("socket.io");
-const Student = require("./models");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const routes = require("./routes");
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, {
+    cors: { origin: "*" }
+});
 
-app.use(cors());
 app.use(express.json());
+app.use("/api", routes);
 
-// MongoDB Connection
-mongoose.connect("mongodb://localhost:27017/engagement-tracker", {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("Connected to MongoDB");
+}).catch(err => console.error("MongoDB connection error:", err));
 
-// API Route for Fetching Student Data
-app.get("/students", async (req, res) => {
-    const students = await Student.find();
-    res.json(students);
-});
+const PORT = process.env.PORT || 5000;
 
-// Socket.io for Real-Time Updates
+// Handle socket.io connections
 io.on("connection", (socket) => {
-    console.log("A user connected");
+    console.log("A user connected:", socket.id);
 
-    socket.on("studentActivity", async (data) => {
-        await Student.findOneAndUpdate(
-            { studentId: data.studentId },
-            { $set: { engagementTime: data.engagementTime, status: data.status } },
-            { upsert: true, new: true }
-        );
-        io.emit("updateTeacher", data);
+    // Listen for chat messages
+    socket.on("chatMessage", (chatData) => {
+        console.log("Message received:", chatData);
+        io.emit("chatMessage", chatData); // Broadcast to all users
+    });
+
+    // Receive student video and forward to teacher
+    socket.on("studentVideo", ({ studentId, video }) => {
+        console.log(`Received video from student ${studentId}`);
+        io.emit("teacherVideo", { studentId, video });
     });
 
     socket.on("disconnect", () => {
-        console.log("User disconnected");
+        console.log("A user disconnected:", socket.id);
     });
 });
 
-// Start Server
-server.listen(5000, () => {
-    console.log("Server running on port 5000");
-});
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

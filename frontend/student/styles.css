@@ -1,110 +1,119 @@
-/* General Styles */
+/* General Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
 }
 
+/* Body Styling */
 body {
-    background-color: #121212;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Landing Page */
-.landing-page, .login-page, .signup-page {
-    width: 400px;
-    text-align: center;
-    background: #1e1e1e;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-header h1 {
-    color: #58a6ff;
-    font-size: 26px;
-    margin-bottom: 20px;
-}
-
-/* Navigation Buttons */
-nav {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
-nav button {
-    padding: 8px 16px;
-    margin: 5px;
-    background-color: transparent;
-    color: #58a6ff;
-    border: 1px solid #58a6ff;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-nav button:hover {
-    background-color: #58a6ff;
-    color: #121212;
-}
-
-/* Main Content */
-.wallpaper {
-    width: 100%;
-    height: 200px;
-    background: url('background.jpg') no-repeat center center;
-    background-size: cover;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #58a6ff;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #1c72b8;
-}
-
-/* Forms */
-form {
+    background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 100%;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-input, select {
-    padding: 10px;
-    background: #252525;
-    border: 1px solid #3a3a3a;
+/* Navbar */
+.navbar {
+    width: 100%;
+    background: #2d3e50;
     color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h1 {
+    font-size: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Main Container */
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+    margin-top: 80px; /* Adjusted for navbar */
+}
+
+/* Headings */
+h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Engagement Tracker */
+.status {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.active {
+    color: green;
+}
+
+.engagement-time {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Video Box */
+.video-container {
+    width: 100%;
+    height: 200px;
+    background: black;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Chat Section */
+.chat {
+    margin-top: 20px;
+}
+
+.chat input {
+    width: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-input:focus, select:focus {
-    outline: none;
-    border-color: #58a6ff;
+.chat button {
+    padding: 8px 12px;
+    background: #58a6ff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
 }
 
-/* Links */
-p a {
-    color: #58a6ff;
-    text-decoration: none;
-}
-
-p a:hover {
-    text-decoration: underline;
+.chat button:hover {
+    background: #1f6feb;
 }

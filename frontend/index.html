@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusFlow - Landing</title>
+    <title>Teacher Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <div class="logo-container">
-                <h1>FocusFlow</h1>
-        </div>
+        <h1>Teacher Dashboard</h1>
         <nav>
-            <button onclick="location.href='login.html'">Login</button>
-            <button onclick="location.href='signup.html'">Sign Up</button>
+            <ul>
+                <li><a href="#">Student Engagement</a></li>
+                <li><a href="#">Live Chat</a></li>
+            </ul>
         </nav>
     </header>
-    <main>
-        <div class="wallpaper"></div>
-        <div class="description">
-            <p>FocusFlow helps teachers track student engagement in real-time using AI-powered attention detection.</p>
-            <p>Enhance classroom participation and ensure better learning outcomes.</p>
+
+    <main class="dashboard">
+        <div class="chat-container">
+            <h2>Live Chat</h2>
+            <input type="text" id="username" placeholder="Enter your name">
+            <input type="text" id="message" placeholder="Type a message">
+            <button id="send">Send</button>
         </div>
-        <button class="try-me" onclick="location.href='login.html'">Try Me</button>
+
+        <div class="video-container">
+            <h2>Student Webcam Feed</h2>
+            <video id="studentVideo" autoplay></video>
+        </div>
     </main>
+
+    <script src="script.js"></script>
 </body>
 </html>

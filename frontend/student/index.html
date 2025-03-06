@@ -3,17 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Engagement Tracker</title>
+    <title>Student Dashboard - FocusFlow</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>FocusFlow</h1>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="logout.html">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
     <div class="container">
-        <h1>Real-Time Student Engagement Tracker</h1>
-        <p id="status">Status: <span class="active">Active</span></p>
-        <p id="engagement-time">Engagement Time: 0s</p>
-        <textarea id="chat" placeholder="Type a message..." oninput="logActivity()"></textarea>
-        <ul id="log"></ul>
+        <h2>Real-Time Student Engagement Tracker</h2>
+        <p class="status">Status: <span class="active">Active</span></p>
+        <p class="engagement-time">Engagement Time: <span id="time">0s</span></p>
+
+        <div class="video-container">
+            <!-- Video Feed Placeholder -->
+        </div>
+
+        <h3>Chat with Teacher</h3>
+        <div class="chat">
+            <input type="text" placeholder="Type a message...">
+            <button>Send</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+
 </body>
 </html>
