@@ -1,22 +1,25 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
+    background: #0d1117;
+    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-color: #f4f4f4;
+    text-align: center;
 }
 
+/* NAVBAR */
 header {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #333;
-    color: white;
+    width: 100%;
+    padding: 15px 50px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
 }
 
 .logo-container {
@@ -25,52 +28,68 @@ header {
 }
 
 .logo {
+    width: 40px;
     height: 40px;
     margin-right: 10px;
 }
 
+nav {
+    display: flex;
+    gap: 15px;
+}
+
 nav button {
-    margin: 0 10px;
-    padding: 10px 15px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
+    background: transparent;
+    border: 2px solid #58a6ff;
+    padding: 8px 16px;
+    font-size: 1rem;
+    color: #58a6ff;
     cursor: pointer;
-    border-radius: 5px;
-}
-
-nav button:hover {
-    background-color: #0056b3;
-}
-
-.wallpaper {
-    width: 80%;
-    height: 400px;
-    background: url('assets/wallpaper.jpg') no-repeat center center/cover;
-    margin: 20px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.description {
-    text-align: center;
-    font-size: 18px;
-    color: #333;
-    margin: 20px 0;
-    width: 60%;
-}
-
-.try-me {
-    padding: 15px 25px;
-    border: none;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
     border-radius: 5px;
     transition: 0.3s;
 }
 
+nav button:hover {
+    background: #58a6ff;
+    color: #0d1117;
+}
+
+/* MAIN CONTENT */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.wallpaper {
+    width: 100%;
+    max-width: 800px;
+    height: 300px;
+    background: url('your-image.jpg') no-repeat center center/cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.description {
+    max-width: 600px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.try-me {
+    background: #58a6ff;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+    color: #fff;
+    font-weight: bold;
+}
+
 .try-me:hover {
-    background-color: #218838;
+    background: #1f6feb;
+    box-shadow: 0 4px 10px rgba(88, 166, 255, 0.3);
 }

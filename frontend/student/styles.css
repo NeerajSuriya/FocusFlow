@@ -1,51 +1,110 @@
-body {
-    font-family: Arial, sans-serif;
+/* General Styles */
+* {
     margin: 0;
     padding: 0;
-    background: #f4f4f4;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Landing Page */
+.landing-page, .login-page, .signup-page {
+    width: 400px;
     text-align: center;
-}
-
-.container {
-    width: 50%;
-    margin: 50px auto;
-    padding: 20px;
-    background: #fff;
+    background: #1e1e1e;
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-h1 {
-    color: #333;
+header h1 {
+    color: #58a6ff;
+    font-size: 26px;
+    margin-bottom: 20px;
 }
 
-#status span {
-    font-weight: bold;
+/* Navigation Buttons */
+nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
-.active {
-    color: green;
-}
-
-.inactive {
-    color: red;
-}
-
-textarea {
-    width: 80%;
-    height: 100px;
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-#log {
-    text-align: left;
-    list-style: none;
-    padding: 10px;
-    margin-top: 10px;
-    background: #eaeaea;
+nav button {
+    padding: 8px 16px;
+    margin: 5px;
+    background-color: transparent;
+    color: #58a6ff;
+    border: 1px solid #58a6ff;
     border-radius: 5px;
-    height: 150px;
-    overflow-y: auto;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background-color: #58a6ff;
+    color: #121212;
+}
+
+/* Main Content */
+.wallpaper {
+    width: 100%;
+    height: 200px;
+    background: url('background.jpg') no-repeat center center;
+    background-size: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #58a6ff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1c72b8;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+input, select {
+    padding: 10px;
+    background: #252525;
+    border: 1px solid #3a3a3a;
+    color: white;
+    border-radius: 5px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #58a6ff;
+}
+
+/* Links */
+p a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
 }
