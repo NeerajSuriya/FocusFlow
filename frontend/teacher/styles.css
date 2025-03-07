@@ -91,3 +91,27 @@
     background-color: gray;
     border: 2px solid white;
 }
+
+
+button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: block;
+    margin: 20px auto; /* Centering the button */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker Green */
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+}

@@ -1,51 +1,92 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const routes = require("./routes");
+const socket = io("http://localhost:5000");
+let studentId = "student_1"; // Change dynamically if needed
+let engagementTime = 0;
+let isActive = true;
 
-dotenv.config();
+// Track Engagement Time
+setInterval(() => {
+    engagementTime++;
+    sendEngagementData();
+}, 1000);
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
-    cors: { origin: "*" }
-});
+// Detect Activity (Mouse & Keyboard)
+function logActivity() {
+    isActive = true;
+    sendEngagementData();
+}
 
+document.addEventListener("mousemove", logActivity);
+document.addEventListener("keydown", logActivity);
+document.addEventListener("click", logActivity);
+
+// Send Engagement Data to Server
+function sendEngagementData() {
+    socket.emit("studentActivity", {
+        studentId,
+        engagementTime,
+        status: isActive ? "Active" : "Inactive",
+    });
+}
+
+// Webcam Access & Video Streaming
+const video = document.getElementById("student-video");
 navigator.mediaDevices.getUserMedia({ video: true })
     .then((stream) => {
-        document.getElementById("videoElement").srcObject = stream;
+        video.srcObject = stream;
+
+        const mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                socket.emit("studentVideo", { studentId, video: event.data });
+            }
+        };
+        mediaRecorder.start(1000); // Send video every 1 sec
     })
-    .catch((err) => console.error("Webcam access error:", err));
+    .catch((error) => console.error("Webcam error:", error));
 
+// Chat Functionality
+const chatMessages = document.getElementById("chat-messages");
+const chatInput = document.getElementById("chat-input");
+const sendButton = document.getElementById("chat-send");
 
+function sendMessage() {
+    const message = chatInput.value.trim();
+    if (message) {
+        socket.emit("chatMessage", {
+            sender: studentId,
+            message,
+            timestamp: new Date().toLocaleTimeString(),
+        });
+        chatInput.value = "";
+    }
+}
 
-app.use(express.json());
-app.use("/api", routes);
-
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log("Connected to MongoDB");
-}).catch(err => console.error("MongoDB connection error:", err));
-
-const PORT = process.env.PORT || 5000;
-
-// Handle socket.io connections
-io.on("connection", (socket) => {
-    console.log("A user connected:", socket.id);
-
-    // Listen for chat messages
-    socket.on("chatMessage", (chatData) => {
-        console.log("Message received:", chatData);
-        io.emit("chatMessage", chatData); // Broadcast to all users
-    });
-
-    socket.on("disconnect", () => {
-        console.log("A user disconnected:", socket.id);
-    });
+// Send Message on Enter Key
+chatInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") sendMessage();
 });
 
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+sendButton.addEventListener("click", sendMessage);
+
+// Receive & Display Messages
+socket.on("chatMessage", ({ sender, message, timestamp }) => {
+    const msgElement = document.createElement("p");
+    msgElement.innerHTML = `<strong>${sender}</strong> [${timestamp}]: ${message}`;
+    chatMessages.appendChild(msgElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+
+// Face Tracking using face-api.js
+import * as faceapi from 'face-api.js';
+let isLooking = true;
+let inactiveTime = 0;
+
+// Load face detection models
+async function loadModels() {
+    await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+}
+
+// Check if student is looking at the camera
+async function detectFace(video) {
+    const detection = await faceapi.de
+}

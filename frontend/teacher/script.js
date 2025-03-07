@@ -1,108 +1,62 @@
-const socket = io("http://localhost:5000");
-let studentId = "student_1"; // Unique ID for each student
-let engagementTime = 0;
-let isActive = true;
-
-// Track Time
-setInterval(() => {
-    engagementTime++;
-    sendData();
-}, 1000);
-
-// Log Activity
-function logActivity() {
-    isActive = true;
-    sendData();
-}
-
-// Detect Mouse & Keyboard
-document.addEventListener("mousemove", logActivity);
-document.addEventListener("keydown", logActivity);
-document.addEventListener("click", logActivity);
-
-// Send Data to Server
-function sendData() {
-    socket.emit("studentActivity", {
-        studentId,
-        engagementTime,
-        status: isActive ? "Active" : "Inactive",
-    });
-}
-
-// Webcam Access
-const video = document.getElementById("student-video");
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        video.srcObject = stream;
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-                socket.emit("studentVideo", { studentId, video: event.data });
-            }
-        };
-        mediaRecorder.start(1000);
-    })
-    .catch(error => console.error("Error accessing webcam:", error));
-
-// Chat Functionality
-const chatMessages = document.getElementById("chat-messages");
-const chatInput = document.getElementById("chat-input");
-const sendButton = document.getElementById("chat-send");
-
-// Send Message with Sender Info and Timestamp
-function sendMessage() {
-    const message = chatInput.value.trim();
-    if (message) {
-        const timestamp = new Date().toLocaleTimeString();
-        const chatData = { sender: studentId, message, timestamp };
-        socket.emit("chatMessage", chatData);
-        chatInput.value = "";
-    }
-}
-
-// Send Message on Enter Key Press
-chatInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-});
-
-sendButton.addEventListener("click", sendMessage);
-
-// Receive and Display Chat Messages
-socket.on("chatMessage", ({ sender, message, timestamp }) => {
-    const msgElement = document.createElement("p");
-    msgElement.innerHTML = `<strong>${sender}</strong> [${timestamp}]: ${message}`;
-    chatMessages.appendChild(msgElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-});
-
-// Handle Disconnect
-socket.on("disconnect", () => {
-    console.log("Disconnected from server");
-});
 const teacherSocket = io("http://localhost:5000");
 
 const studentVideoFeed = document.getElementById("student-video-feed");
+const engagementList = document.getElementById("engagement-list");
+const chatBox = document.getElementById("chatBox");
 
+// 📌 Receive Student Video Streams
 teacherSocket.on("studentVideo", ({ studentId, video }) => {
-    console.log(`Receiving video from ${studentId}`);
+    console.log(`🎥 Receiving video from ${studentId}`);
 
     const blob = new Blob([video], { type: "video/webm" });
     const videoURL = URL.createObjectURL(blob);
     studentVideoFeed.src = videoURL;
 });
 
-const engagementList = document.getElementById("engagement-list");
+// 📌 Receive Engagement Updates from Students
+teacherSocket.on("engagementUpdate", ({ studentId, engaged }) => {
+    console.log(`📩 Engagement update received: ${studentId} - ${engaged ? "Engaged" : "Not Engaged"}`);
 
-teacherSocket.on("updateEngagement", ({ studentId, engagementTime, status }) => {
+    // Update UI (Red border if disengaged, green if engaged)
+    let studentVideo = document.getElementById(`student-${studentId}`);
+    if (studentVideo) {
+        studentVideo.style.border = engaged ? "2px solid green" : "5px solid red";
+    }
+
+    // Update Engagement List
     let studentEntry = document.getElementById(`engagement-${studentId}`);
-    
     if (!studentEntry) {
         studentEntry = document.createElement("p");
         studentEntry.id = `engagement-${studentId}`;
         engagementList.appendChild(studentEntry);
     }
-
-    studentEntry.textContent = `${studentId} - ${status}, Engaged for ${engagementTime}s`;
+    studentEntry.textContent = `${studentId} - ${engaged ? "Engaged" : "Not Engaged"}`;
 });
+
+// 📌 Receive Chat Messages
+teacherSocket.on("chatMessage", (data) => {
+    chatBox.innerHTML += `<p><strong>${data.sender}:</strong> ${data.message}</p>`;
+});
+
+// 📌 Fetch Engagement Logs
+async function fetchEngagementLogs() {
+    try {
+        const response = await fetch("http://localhost:5000/get-engagement-logs"); // ✅ Corrected endpoint
+        if (!response.ok) throw new Error("Failed to fetch logs");
+
+        const logs = await response.json();
+        console.log("Logs received:", logs); // Debugging
+
+        // Clear previous logs before updating
+        const historyList = document.getElementById("engagementHistory");
+        historyList.innerHTML = "";
+
+        logs.forEach(log => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${log.student} - ${log.engagementLevel} at ${log.timestamp}`;
+            historyList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error("Error fetching logs:", error);
+    }
+}
